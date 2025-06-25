@@ -41,7 +41,7 @@ jobs:
           JOB_STATUS: ${{ job.status }}
         run: python gmail_notify.py
 
-deploy:
+  deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
