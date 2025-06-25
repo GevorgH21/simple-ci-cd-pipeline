@@ -33,3 +33,11 @@ jobs:
             -d '{"content": "CI/CD Job *${{ job.status }}* for branch `${{ github.ref_name }}`"}' \
             ${{ secrets.DISCORD_WEBHOOK_URL }}
 
+      - name: Send Gmail notification
+        if: always()
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
+          JOB_STATUS: ${{ job.status }}
+        run: python gmail_notify.py
+
