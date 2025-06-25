@@ -1,11 +1,12 @@
-name: CI/CD Pipeline
+name: Simple CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build-and-test:
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,4 +25,11 @@ jobs:
 
       - name: Run tests
         run: pytest
+
+      - name: Notify Discord on success or failure
+        if: always()
+        run: |
+          curl -H "Content-Type: application/json" \
+            -d '{"content": "CI/CD Job *${{ job.status }}* for branch `${{ github.ref_name }}`"}' \
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
 
