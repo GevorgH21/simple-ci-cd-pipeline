@@ -42,7 +42,7 @@ jobs:
         run: python gmail_notify.py
 
   deploy:
-    needs: build-and-test
+    needs: build-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
